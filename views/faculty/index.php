@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'app\extensions\grid\ActionColumnMe'],
         ],
     ]); ?>
 

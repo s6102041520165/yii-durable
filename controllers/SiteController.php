@@ -9,6 +9,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Materials;
+use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
 {
@@ -23,7 +25,7 @@ class SiteController extends Controller
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','materials'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -62,6 +64,26 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+    
+    /**
+     * Displays Materails.
+     *
+     * @return string
+     */
+    public function actionMaterials()
+    {
+        $searchModel = new \app\models\MaterialsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('materials', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
+        ]);
+    }
+    
+    public function actionWithdraw(){
+        return $this->render('withdraw');
     }
 
     /**
@@ -124,5 +146,13 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+    
+    protected function findModel($id) {
+        if (($model = Materials::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

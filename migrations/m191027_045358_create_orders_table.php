@@ -12,14 +12,22 @@ class m191027_045358_create_orders_table extends Migration
      */
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('{{%orders}}', [
             'id' => $this->primaryKey()->notNull(),
-            'teachers_id' => $this->integer()->notNull(),
-            'term' => $this->string(1)->notNull(),
-            'year_of_study' => $this->string(4)->notNull(),
+            'term' => $this->integer()->notNull(),
+            'year_of_study' => $this->integer()->notNull(),
             'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
+            'created_by' => $this->integer()->notNull(),
+            'updated_by' => $this->integer()->notNull(),
             'amount_item' => $this->integer()
-        ]);
+        ],$tableOptions);
 
     }
 

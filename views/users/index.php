@@ -29,15 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
-            //'email:email',
-            //'status',
-            //'created_at',
-            //'updated_at',
+            //'auth_key',
+            //'password_hash',
+            //'password_reset_token',
+            'email:email',
+            [
+                'attribute' => 'status',
+                'value' => function($data){
+                    return $data->status==10?'Active':'Inactive';
+                }
+            ],
+            'created_at:relativeTime',
+            'updated_at:relativeTime',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'app\extensions\grid\ActionColumnMe'],
         ],
     ]); ?>
 

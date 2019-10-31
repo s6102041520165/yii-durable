@@ -30,10 +30,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'teachers_id',
+            [
+                'attribute' => 'created_by',
+                'value' => function($data){
+                    //print_r($data->creator);
+                    return $data->creator['first_name']." ".$data->creator['last_name'];
+                }
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function($data){
+                    return $data->updator['first_name']." ".$data->updator['last_name'];
+                }
+            ],
             'term',
             'year_of_study',
-            'created_at',
+            'created_at:relativeTime',
+            'updated_at:relativeTime',
             'amount_item',
         ],
     ]) ?>

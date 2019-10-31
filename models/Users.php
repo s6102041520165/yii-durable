@@ -51,15 +51,15 @@ class Users extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'username' => 'Username',
+            'id' => 'รหัส',
+            'username' => 'ชื่อผู้ใช้',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',
-            'email' => 'Email',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'email' => 'อีเมล',
+            'status' => 'สถานะ',
+            'created_at' => 'สร้างเมื่อ',
+            'updated_at' => 'แก้ไขล่าสุดเมื่อ',
         ];
     }
 

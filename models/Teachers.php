@@ -58,24 +58,29 @@ class Teachers extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'prefix_id' => 'Prefix ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'faculty_id' => 'Faculty ID',
-            'address' => 'Address',
-            'telephone' => 'Telephone',
-            'email' => 'Email',
-            'user_id' => 'User ID',
+            'id' => 'รหัส',
+            'prefix_id' => 'คำนำหน้า',
+            'first_name' => 'ชื่อ',
+            'last_name' => 'นามสกุล',
+            'faculty_id' => 'แผนกวิชา',
+            'address' => 'ที่อยู่',
+            'telephone' => 'เบอร์โทร',
+            'email' => 'อีเมล',
+            'user_id' => 'ผู้ใช้',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrders()
+    public function getCreator()
     {
-        return $this->hasMany(Orders::className(), ['teachers_id' => 'id']);
+        return $this->hasMany(Orders::className(), ['created_by' => 'id']);
+    }
+    
+    public function getUpdator()
+    {
+        return $this->hasMany(Orders::className(), ['updated_by' => 'id']);
     }
 
     /**

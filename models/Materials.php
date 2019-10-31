@@ -36,9 +36,9 @@ class Materials extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'types_id', 'brand_id', 'units_id', 'price'], 'required'],
-            [['types_id', 'brand_id', 'units_id'], 'integer'],
-            [['price'], 'number'],
+            [['name', 'types_id', 'brand_id', 'units_id', 'price','stock'], 'required','message'=>'ฟิลด์นี้ต้องไม่เป็นค่าว่าง'],
+            [['types_id', 'brand_id', 'units_id','stock'], 'integer','message'=>'ฟิลด์นี้ต้องเป็นตัวเลขจำนวนเต็ม'],
+            [['price'], 'number','message'=>'กรุณาป้อนตัวเลขทศนิยม'],
             [['name', 'details'], 'string', 'max' => 255],
             [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => Brand::className(), 'targetAttribute' => ['brand_id' => 'id']],
             [['types_id'], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => ['types_id' => 'id']],
@@ -52,13 +52,14 @@ class Materials extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'types_id' => 'Types ID',
-            'brand_id' => 'Brand ID',
-            'details' => 'Details',
-            'units_id' => 'Units ID',
-            'price' => 'Price',
+            'id' => 'รหัส',
+            'name' => 'ชื่อเรื่อง',
+            'types_id' => 'ประเภทพัสดุ',
+            'brand_id' => 'ยี่ห้อ',
+            'details' => 'รายละเอียด',
+            'units_id' => 'หน่วย',
+            'stock' => 'จำนวน',
+            'price' => 'ราคา',
         ];
     }
 

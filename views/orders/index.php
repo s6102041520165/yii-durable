@@ -19,22 +19,34 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel,]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'teachers_id',
-            'term',
-            'year_of_study',
-            'created_at',
+            [
+                'attribute' => 'created_by',
+                'value' => function($data){
+                    //print_r($data->creator);
+                    return $data->creator['first_name']." ".$data->creator['last_name'];
+                }
+            ],
+            [
+                'attribute' => 'term',
+                'label' => 'เทอม / ปีการศึกษา',
+                'value' => function($data){
+                    return $data->term."/".$data->year_of_study;
+                }
+            ],
+            'created_at:relativeTime',
+            //'updated_at',
             //'amount_item',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'app\extensions\grid\ActionColumnMe'],
         ],
     ]); ?>
 

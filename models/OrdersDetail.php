@@ -45,11 +45,11 @@ class OrdersDetail extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'orders_id' => 'Orders ID',
-            'material_id' => 'Material ID',
-            'amount' => 'Amount',
-            'status' => 'Status',
+            'id' => 'รหัส',
+            'orders_id' => 'รหัสใบจอง',
+            'material_id' => 'รหัสพัสดุ',
+            'amount' => 'จำนวน',
+            'status' => 'สถานะ',
         ];
     }
 

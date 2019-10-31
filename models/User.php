@@ -86,7 +86,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByVerificationToken($token) {
         return static::findOne([
             'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
+            'status' => self::STATUS_ACTIVE
         ]);
     }
     /**
@@ -129,15 +129,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'username' => 'Username',
+            'id' => 'รหัส',
+            'username' => 'ชื่อผู้ใช้',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',
-            'email' => 'Email',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'email' => 'อีเมล',
+            'status' => 'สถานะ',
+            'created_at' => 'สร้างเมื่อ',
+            'updated_at' => 'แก้ไขล่าสุดเมื่อ',
         ];
     }
     /**
@@ -173,10 +173,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
-    public function generateEmailVerificationToken()
+
+    /*public function generateEmailVerificationToken()
     {
         $this->verification_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
+    }*/
     /**
      * Removes password reset token
      */

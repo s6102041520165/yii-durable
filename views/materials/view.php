@@ -31,11 +31,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'types_id',
-            'brand_id',
+            [
+                'attribute' => 'types_id',
+                'value' => function($data){
+                    return $data->types['name'];
+                }
+            ],
+            [
+                'attribute' => 'brand_id',
+                'value' => function($data){
+                    return $data->brand['name'];
+                }
+            ],
             'details',
-            'units_id',
-            'price',
+            [
+                'attribute' => 'stock',
+                'value' => function($data){
+                    return $data->stock." ".$data->units['name'];
+                }
+            ],
+            [
+                'attribute' => 'price',
+                'value' => function($data){
+                    return $data->price." บาท";
+                }
+            ],
         ],
     ]) ?>
 

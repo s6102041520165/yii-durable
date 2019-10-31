@@ -14,10 +14,11 @@ class MaterialsSearch extends Materials
     /**
      * {@inheritdoc}
      */
+    
     public function rules()
     {
         return [
-            [['id', 'types_id', 'brand_id', 'units_id'], 'integer'],
+            [['id','types_id', 'brand_id','stock', 'units_id'], 'integer'],
             [['name', 'details'], 'safe'],
             [['price'], 'number'],
         ];
@@ -62,7 +63,7 @@ class MaterialsSearch extends Materials
             'id' => $this->id,
             'types_id' => $this->types_id,
             'brand_id' => $this->brand_id,
-            'units_id' => $this->units_id,
+            'stock' => $this->stock,
             'price' => $this->price,
         ]);
 

@@ -38,8 +38,8 @@ class Units extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'id' => 'รหัส',
+            'name' => 'ชื่อหน่วย',
         ];
     }
 

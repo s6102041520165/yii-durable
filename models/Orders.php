@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+
 /**
  * This is the model class for table "orders".
  *
@@ -17,65 +19,63 @@ use yii\behaviors\TimestampBehavior;
  * @property Teachers $teachers
  * @property OrdersDetail[] $ordersDetails
  */
-class Orders extends \yii\db\ActiveRecord
-{
+class Orders extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'orders';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['teachers_id', 'term', 'year_of_study', 'created_at'], 'required'],
-            [['teachers_id', 'created_at', 'amount_item'], 'integer'],
-            [['term'], 'string', 'max' => 1],
+            [['term', 'year_of_study'], 'required'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by', 'amount_item'], 'integer'],
+            [['term'], 'integer'],
             [['year_of_study'], 'string', 'max' => 4],
-            [['teachers_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teachers::className(), 'targetAttribute' => ['teachers_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => Teachers::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => Teachers::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'teachers_id' => 'Teachers ID',
-            'term' => 'Term',
-            'year_of_study' => 'Year Of Study',
-            'created_at' => 'Created At',
-            'amount_item' => 'Amount Item',
+            'id' => 'รหัส',
+            'term' => 'เทอม',
+            'year_of_study' => 'ปีการศึกษา',
+            'created_at' => 'เพิ่มเมื่อ',
+            'updated_at' => 'แก้ไขเมื่อ',
+            'created_by' => 'เพิ่มโดย',
+            'updated_by' => 'แก้ไขโดย',
+            'amount_item' => 'จำนวน',
         ];
     }
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             TimestampBehavior::className(),
+            BlameableBehavior::className()
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTeachers()
-    {
-        return $this->hasOne(Teachers::className(), ['id' => 'teachers_id']);
+
+    public function getCreator() {
+        return $this->hasOne(Teachers::className(), ['id' => 'created_by']);
+    }
+    
+    public function getUpdator() {
+        return $this->hasOne(Teachers::className(), ['id' => 'updated_by']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrdersDetails()
-    {
+    public function getOrdersDetails() {
         return $this->hasMany(OrdersDetail::className(), ['orders_id' => 'id']);
     }
+
 }

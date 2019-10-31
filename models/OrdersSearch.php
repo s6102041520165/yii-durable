@@ -17,8 +17,8 @@ class OrdersSearch extends Orders
     public function rules()
     {
         return [
-            [['id', 'teachers_id', 'created_at', 'amount_item'], 'integer'],
-            [['term', 'year_of_study'], 'safe'],
+            [['id', 'created_by','updated_by', 'term', 'created_at', 'updated_at', 'amount_item'], 'integer'],
+            [['year_of_study'], 'safe'],
         ];
     }
 
@@ -46,7 +46,11 @@ class OrdersSearch extends Orders
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
+        
 
         $this->load($params);
 
@@ -59,13 +63,15 @@ class OrdersSearch extends Orders
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'teachers_id' => $this->teachers_id,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
+            'term' => $this->term,
             'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'amount_item' => $this->amount_item,
         ]);
 
-        $query->andFilterWhere(['like', 'term', $this->term])
-            ->andFilterWhere(['like', 'year_of_study', $this->year_of_study]);
+        $query->andFilterWhere(['like', 'year_of_study', $this->year_of_study]);
 
         return $dataProvider;
     }

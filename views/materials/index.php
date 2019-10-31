@@ -29,13 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'types_id',
-            'brand_id',
-            'details',
+            [
+                'attribute' => 'types_id',
+                'value' => function($data){
+                    return $data->types['name'];
+                }
+            ],
+            [
+                'attribute' => 'brand_id',
+                'value' => function($data){
+                    return $data->brand['name'];
+                }
+            ],
+            //'details',
             //'units_id',
             //'price',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'app\extensions\grid\ActionColumnMe'],
         ],
     ]); ?>
 

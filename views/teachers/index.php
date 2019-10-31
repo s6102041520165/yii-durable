@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'email:email',
             //'user_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'app\extensions\grid\ActionColumnMe'],
         ],
     ]); ?>
 
