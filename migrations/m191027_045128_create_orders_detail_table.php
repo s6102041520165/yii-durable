@@ -22,8 +22,7 @@ class m191027_045128_create_orders_detail_table extends Migration
             'id' => $this->primaryKey(),
             'orders_id' => $this->integer()->notNull(),
             'material_id' => $this->integer()->notNull(),
-            'amount'=> $this->integer()->notNull(),
-            'status' => $this->integer()
+            'items'=> $this->integer()->notNull(),
         ],$tableOptions);
 
        

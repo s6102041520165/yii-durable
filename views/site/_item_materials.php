@@ -14,8 +14,12 @@ $disableButton = ($model->stock>0)? FALSE: TRUE;
 </style>
 <div>
     <span class="badge <?=$badgeColor;?> badge-pill"><?=$model->stock;?> <?=$model->units['name']?></span>
-    <?php $form = ActiveForm::begin(['action' => ['withdraw']]);  ?>
-    <?=$form->field($model, 'id')->hiddenInput()->label(FALSE);?>
+    <?php $form = ActiveForm::begin(
+        [
+            'action' => ['add-withdraw','id'=>$model->id],
+            'method' => 'post',
+        ]
+    );  ?>
     <?=Html::submitButton(Html::tag('span', '', ['class'=>'fa fa-plus'])." เบิก",['class'=>"btn btn-success",'disabled'=>$disableButton]);?>
     <?php ActiveForm::end() ?>
 </div>

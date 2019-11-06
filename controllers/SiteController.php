@@ -10,7 +10,8 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Materials;
-use yii\data\ActiveDataProvider;
+use app\models\Withdraw;
+use yii\web\ForbiddenHttpException;
 
 class SiteController extends Controller
 {
@@ -22,10 +23,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','materials','add-withdraw','withdraw-update'],
                 'rules' => [
                     [
-                        'actions' => ['logout','materials'],
+                        'actions' => ['logout','materials','add-withdraw','withdraw-update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -35,6 +36,8 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'add-withdraw' => ['post'],
+                    'withdraw-update' => ['post'],
                 ],
             ],
         ];
@@ -81,9 +84,48 @@ class SiteController extends Controller
                     'dataProvider' => $dataProvider
         ]);
     }
-    
+    /*
+    stored materials id to withdraw and clear on actionSignout action.
+     */
+    public function actionAddWithdraw($id){
+        $this->checkPermission();
+        $model = new Withdraw();
+        $data = Withdraw::find()->where('material_id='.$id)->andWhere('created_by='.Yii::$app->user->id)->one();
+        
+        if(isset($data)){
+            $model = Withdraw::findOne($data->id);
+            $model->items = ($data->items)+1;
+            $model->save();
+        } else {
+            $model->material_id =(int)$id;
+            $model->items = 1;
+            $model->save();  
+        }
+        return $this->redirect('withdraw');
+    }
+
     public function actionWithdraw(){
-        return $this->render('withdraw');
+        $this->checkPermission();
+        $searchModels = new \app\models\WithdrawSearch();
+        $dataProvider = $searchModels->search();
+        
+        $orderModel = new \app\models\Orders();
+        
+        return $this->render('withdraw',['model' => $dataProvider,'orderModel'=>$orderModel]);
+    }
+    
+    public function actionWithdrawUpdate($id) {
+        //var_dump(Yii::$app->request->post('items'));
+        $this->checkPermission();
+        $model = Withdraw::findOne($id);
+        $item = Yii::$app->request->post('items');
+        if($item>0){
+            $model->items = $item;
+            $model->save();
+        } else {
+            Withdraw::findOne($id)->delete();
+        }
+        return $this->redirect('withdraw');
     }
 
     /**
@@ -115,6 +157,7 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        Withdraw::deleteAll('created_by = '.Yii::$app->user->id);
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -148,11 +191,18 @@ class SiteController extends Controller
         return $this->render('about');
     }
     
+    //Deleted model from id param.
     protected function findModel($id) {
         if (($model = Materials::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public function checkPermission(){
+        if (!Yii::$app->user->can('createOrders')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
     }
 }

@@ -80,13 +80,26 @@ class OrdersController extends Controller {
         if (!Yii::$app->user->can('createOrders')) {
             throw new ForbiddenHttpException('Permision access denined.');
         }
-        
         $model = new Orders();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if($model->load(Yii::$app->request->post()) && $model->save()){
+            $id = $model->id;
+            $withdraws = \app\models\Withdraw::find()->where('created_by = '.Yii::$app->user->id)->all();
+            foreach ($withdraws as $withdraw){
+                $orderDetail = new \app\models\OrdersDetail();
+                //สร้าง Object เพื่อ ตัดสต็อก
+                $material = \app\models\Materials::findOne($withdraw->material_id);
+                $material->stock = $material->stock - $withdraw->items;
+                $orderDetail->orders_id = $id;
+                $orderDetail->items = $withdraw->items;
+                $orderDetail->material_id = $withdraw->material_id;
+                
+                $material->save();
+                $orderDetail->save();
+            }
+            \app\models\Withdraw::deleteAll('created_by = '.Yii::$app->user->id);
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
+              
         return $this->render('create', [
                     'model' => $model,
         ]);

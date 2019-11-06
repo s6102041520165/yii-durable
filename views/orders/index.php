@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'created_by',
                 'value' => function($data){
-                    //print_r($data->creator);
                     return $data->creator['first_name']." ".$data->creator['last_name'];
                 }
             ],
@@ -43,8 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'created_at:relativeTime',
-            //'updated_at',
-            //'amount_item',
 
             ['class' => 'app\extensions\grid\ActionColumnMe'],
         ],

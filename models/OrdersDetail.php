@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "orders_detail".
  *
@@ -32,8 +30,8 @@ class OrdersDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['orders_id', 'material_id', 'amount'], 'required'],
-            [['orders_id', 'material_id', 'amount', 'status'], 'integer'],
+            [['orders_id', 'material_id', 'items'], 'required'],
+            [['orders_id', 'material_id', 'items'], 'integer'],
             [['material_id'], 'exist', 'skipOnError' => true, 'targetClass' => Materials::className(), 'targetAttribute' => ['material_id' => 'id']],
             [['orders_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['orders_id' => 'id']],
         ];
@@ -48,8 +46,7 @@ class OrdersDetail extends \yii\db\ActiveRecord
             'id' => 'รหัส',
             'orders_id' => 'รหัสใบจอง',
             'material_id' => 'รหัสพัสดุ',
-            'amount' => 'จำนวน',
-            'status' => 'สถานะ',
+            'items' => 'จำนวน',
         ];
     }
 

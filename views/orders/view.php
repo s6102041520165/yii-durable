@@ -47,7 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'year_of_study',
             'created_at:relativeTime',
             'updated_at:relativeTime',
-            'amount_item',
         ],
     ]) ?>
 

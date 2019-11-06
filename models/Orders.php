@@ -34,7 +34,7 @@ class Orders extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['term', 'year_of_study'], 'required'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by', 'amount_item'], 'integer'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by',], 'integer'],
             [['term'], 'integer'],
             [['year_of_study'], 'string', 'max' => 4],
             [['created_by'], 'exist', 'skipOnError' => TRUE, 'targetClass' => Teachers::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -54,7 +54,6 @@ class Orders extends \yii\db\ActiveRecord {
             'updated_at' => 'แก้ไขเมื่อ',
             'created_by' => 'เพิ่มโดย',
             'updated_by' => 'แก้ไขโดย',
-            'amount_item' => 'จำนวน',
         ];
     }
 
