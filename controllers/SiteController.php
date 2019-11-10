@@ -23,10 +23,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','materials','add-withdraw','withdraw-update'],
+                'only' => ['logout','index','materials','add-withdraw','withdraw-update'],
                 'rules' => [
                     [
-                        'actions' => ['logout','materials','add-withdraw','withdraw-update'],
+                        'actions' => ['logout','index','materials','add-withdraw','withdraw-update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -65,8 +65,13 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex()
-    {
-        return $this->render('index');
+    { $searchModel = new \app\models\MaterialsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
+        ]);
     }
     
     /**

@@ -17,7 +17,7 @@ class OrdersSearch extends Orders
     public function rules()
     {
         return [
-            [['id', 'created_by','updated_by', 'term', 'created_at', 'updated_at', 'amount_item'], 'integer'],
+            [['id', 'created_by','updated_by', 'term', 'created_at', 'updated_at'], 'integer'],
             [['year_of_study'], 'safe'],
         ];
     }
@@ -68,7 +68,6 @@ class OrdersSearch extends Orders
             'term' => $this->term,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'amount_item' => $this->amount_item,
         ]);
 
         $query->andFilterWhere(['like', 'year_of_study', $this->year_of_study]);

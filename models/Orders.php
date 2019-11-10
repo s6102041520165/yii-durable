@@ -66,11 +66,11 @@ class Orders extends \yii\db\ActiveRecord {
 
 
     public function getCreator() {
-        return $this->hasOne(Teachers::className(), ['id' => 'created_by']);
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
     
     public function getUpdator() {
-        return $this->hasOne(Teachers::className(), ['id' => 'updated_by']);
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     public function getOrdersDetails() {

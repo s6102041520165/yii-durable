@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'created_by',
                 'value' => function($data){
-                    return $data->creator['first_name']." ".$data->creator['last_name'];
+                    return $data->creator['username'];
                 }
             ],
             [

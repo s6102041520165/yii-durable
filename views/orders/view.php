@@ -34,13 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'created_by',
                 'value' => function($data){
                     //print_r($data->creator);
-                    return $data->creator['first_name']." ".$data->creator['last_name'];
+                    return $data->creator['username'];
                 }
             ],
             [
                 'attribute' => 'updated_by',
                 'value' => function($data){
-                    return $data->updator['first_name']." ".$data->updator['last_name'];
+                    return $data->updator['username'];
                 }
             ],
             'term',

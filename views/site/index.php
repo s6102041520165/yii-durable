@@ -1,24 +1,26 @@
-<?php
-
-/* @var $this yii\web\View */
-$this->title = 'Durable - Home';
+<?php 
+use yii\widgets\ListView;
+use yii\helpers\Html;
+use yii\widgets\Pjax;
+$this->title = 'Home -Durable';
 ?>
 <div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+    <a class="btn btn-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        ตัวกรอง <span class="fa fa-filter"></span>
+    </a>
+    <?php Pjax::begin();?>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+            <?=$this->render('_search',['model'=>$searchModel])?>
+      </div>
     </div>
-    <?php 
-    /*$dataProvider = new ActiveDataProvider([
-        'query' => $models,
-        'pagination' => [
-            'pageSize' => 20,
-        ],
-    ]);*/
-    
+    <?php
+    echo ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => '_item_materials',
+        'itemOptions' => ['class'=>'list-group-item d-flex justify-content-between align-items-center'],
+        'options' => ['class' => 'list-group']
+    ]);
     ?>
+    <?php Pjax::end(); ?>
 </div>
