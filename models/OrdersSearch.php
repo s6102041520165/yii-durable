@@ -40,6 +40,7 @@ class OrdersSearch extends Orders
      */
     public function search($params)
     {
+          
         $query = Orders::find();
 
         // add conditions that should always apply here
@@ -61,16 +62,22 @@ class OrdersSearch extends Orders
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-            'term' => $this->term,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ]);
-
-        $query->andFilterWhere(['like', 'year_of_study', $this->year_of_study]);
+        if(\Yii::$app->authManager->getRolesByUser(\Yii::$app->user->id)==='teacher'){
+            $query->andFilterWhere([
+                'user_id' => \Yii::$app->user->id,
+            ]);
+        } else {
+            $query->andFilterWhere([
+                'id' => $this->id,
+                'created_by' => $this->created_by,
+                'updated_by' => $this->updated_by,
+                'term' => $this->term,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+            ]);
+            
+            $query->andFilterWhere(['like', 'year_of_study', $this->year_of_study]);
+        }
 
         return $dataProvider;
     }

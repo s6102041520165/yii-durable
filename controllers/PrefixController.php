@@ -8,7 +8,7 @@ use app\models\PrefixSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\ForbiddenHttpException;
 /**
  * PrefixController implements the CRUD actions for Prefix model.
  */
@@ -35,6 +35,9 @@ class PrefixController extends Controller
      */
     public function actionIndex()
     {
+        if (!Yii::$app->user->can('managePrefix')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $searchModel = new PrefixSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -52,6 +55,9 @@ class PrefixController extends Controller
      */
     public function actionView($id)
     {
+        if (!Yii::$app->user->can('managePrefix')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -64,6 +70,9 @@ class PrefixController extends Controller
      */
     public function actionCreate()
     {
+        if (!Yii::$app->user->can('managePrefix')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $model = new Prefix();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -84,6 +93,9 @@ class PrefixController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (!Yii::$app->user->can('managePrefix')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -104,6 +116,9 @@ class PrefixController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!Yii::$app->user->can('managePrefix')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

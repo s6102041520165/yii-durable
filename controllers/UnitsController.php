@@ -8,7 +8,7 @@ use app\models\UnitsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\ForbiddenHttpException;
 /**
  * UnitsController implements the CRUD actions for Units model.
  */
@@ -35,6 +35,9 @@ class UnitsController extends Controller
      */
     public function actionIndex()
     {
+        if (!Yii::$app->user->can('manageUnit')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $searchModel = new UnitsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -52,6 +55,9 @@ class UnitsController extends Controller
      */
     public function actionView($id)
     {
+        if (!Yii::$app->user->can('manageUnit')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -64,6 +70,9 @@ class UnitsController extends Controller
      */
     public function actionCreate()
     {
+        if (!Yii::$app->user->can('manageUnit')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $model = new Units();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -84,6 +93,9 @@ class UnitsController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (!Yii::$app->user->can('manageUnit')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -104,6 +116,9 @@ class UnitsController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!Yii::$app->user->can('manageUnit')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

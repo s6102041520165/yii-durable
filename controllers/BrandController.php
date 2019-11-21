@@ -8,6 +8,7 @@ use app\models\BrandSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * BrandController implements the CRUD actions for Brand model.
@@ -35,6 +36,9 @@ class BrandController extends Controller
      */
     public function actionIndex()
     {
+        if (!Yii::$app->user->can('manageBrand')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $searchModel = new BrandSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -52,6 +56,9 @@ class BrandController extends Controller
      */
     public function actionView($id)
     {
+        if (!Yii::$app->user->can('manageBrand')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -64,6 +71,9 @@ class BrandController extends Controller
      */
     public function actionCreate()
     {
+        if (!Yii::$app->user->can('manageBrand')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $model = new Brand();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -84,6 +94,9 @@ class BrandController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (!Yii::$app->user->can('manageBrand')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -104,6 +117,9 @@ class BrandController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!Yii::$app->user->can('manageBrand')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

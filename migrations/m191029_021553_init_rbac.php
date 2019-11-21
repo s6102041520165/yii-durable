@@ -20,6 +20,38 @@ class m191029_021553_init_rbac extends Migration
         $updateOrders = $auth->createPermission('updateOrders');
         $updateOrders->description = 'Update orders.';
         $auth->add($updateOrders);
+        
+        $user = $auth->createPermission('manageUser');
+        $user->description = 'Mange User';
+        $auth->add($user);
+        
+        $material = $auth->createPermission('manageMaterial');
+        $material->description = 'Mange Material';
+        $auth->add($material);
+        
+        $teachManage = $auth->createPermission('manageTeacher');
+        $teachManage->description = 'Mange Teacher';
+        $auth->add($teachManage);
+        
+        $brand = $auth->createPermission('manageBrand');
+        $brand->description = 'Mange Brands';
+        $auth->add($brand);
+        
+        $type = $auth->createPermission('manageType');
+        $type->description = 'Mange Types';
+        $auth->add($type);
+        
+        $unit = $auth->createPermission('manageUnit');
+        $unit->description = 'Mange Units';
+        $auth->add($unit);
+        
+        $faculty = $auth->createPermission('manageFaculty');
+        $faculty->description = 'Mange Faculties';
+        $auth->add($faculty);
+        
+        $prefix = $auth->createPermission('managePrefix');
+        $prefix->description = 'Mange Prefixs';
+        $auth->add($prefix);
 
         // add "teacher" role and give this role the "createOrders" permission
         $teacher = $auth->createRole('teacher');
@@ -31,6 +63,15 @@ class m191029_021553_init_rbac extends Migration
         $admin = $auth->createRole('admin');
         $auth->add($admin);
         $auth->addChild($admin, $updateOrders);
+        $auth->addChild($admin, $user);
+        $auth->addChild($admin, $material);
+        $auth->addChild($admin, $teachManage);
+        $auth->addChild($admin, $brand);
+        $auth->addChild($admin, $type);
+        $auth->addChild($admin, $unit);
+        $auth->addChild($admin, $faculty);
+        $auth->addChild($admin, $prefix);
+        
         //เพิ่มสิทธิให้ Admin สามารถจัดการข้อมูลทุกอย่างที่ teacher ทำได้
         //$auth->addChild($admin, $teacher);
 

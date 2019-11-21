@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'yii-2-durable',
-    'name' => 'Durable',
+    'name' => 'ระบบบริหารการเบิกจ่ายวัสดุอุปกรณ์สำนักงาน',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [

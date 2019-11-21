@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=durable',
-    'username' => 'root',
-    'password' => 'Weerachai06',
+    'dsn' => 'mysql:host=localhost;dbname=vrtourpt_durable',
+    'username' => 'vrtourpt_durable',
+    'password' => 'durable',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)

@@ -32,7 +32,7 @@ class m191027_043721_create_user_table extends Migration {
             'id' => 1,
             'username' => 'admin',
             'auth_key' => Yii::$app->security->generateRandomString(),
-            'password_hash' => Yii::$app->security->generatePasswordHash('AdMinDefault'),
+            'password_hash' => Yii::$app->security->generatePasswordHash('durablebc'),
             'password_reset_token' => null,
             'email' => 'amin@webmaster.com',
             'status' => 10,

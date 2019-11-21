@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\SignupForm;
-
+use yii\web\ForbiddenHttpException;
 /**
  * UsersController implements the CRUD actions for Users model.
  */
@@ -36,6 +36,9 @@ class UsersController extends Controller
      */
     public function actionIndex()
     {
+        if (!Yii::$app->user->can('manageUser')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $searchModel = new UsersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -53,6 +56,9 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
+        if (!Yii::$app->user->can('manageUser')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -65,6 +71,9 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
+        if (!Yii::$app->user->can('manageUser')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
@@ -84,6 +93,9 @@ class UsersController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (!Yii::$app->user->can('manageUser')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -104,6 +116,9 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!Yii::$app->user->can('manageUser')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

@@ -11,12 +11,12 @@ use app\assets\AppAsset;
 
 AppAsset::register($this);
 
-class MyDev extends Yii
-{
-    public static function powered()
-    {
+class MyDev extends Yii {
+
+    public static function powered() {
         echo "Powered by Business Computer";
     }
+
 }
 ?>
 <?php $this->beginPage() ?>
@@ -38,12 +38,12 @@ class MyDev extends Yii
                 display: block;
                 width: 100%;
             }
-            
+
         </style>
     </head>
     <body>
         <div class="wrap">
-        <?php $this->beginBody() ?>       
+            <?php $this->beginBody() ?>       
             <?php
             NavBar::begin([
                 'brandLabel' => Yii::$app->name,
@@ -54,44 +54,46 @@ class MyDev extends Yii
             ]);
             echo Nav::widget([
                 'items' => [
-                    [
-                        'label' => 'Home', 
+                        [
+                        'label' => 'หน้าแรก',
                         //'options' => ['class' => 'active'],
                         'url' => ['/site/index'],
                     ],
-                    [
-                        'label' => 'About', 
-                        //'options' => ['class' => ''],
-                        'url' => ['/site/about']
-                    ],
-                    [
-                        'label' => 'Contact', 
-                        //'options' => ['class' => ''],
-                        'url' => ['/site/contact']
-                    ],
                     /**
-                    [
-                    'label' => 'Dropdown',
+                        ['label' => 'ผู้ใช้', 'url' => ['/users'], 'visible' => Yii::$app->user->can('manageUser') ? TRUE : FALSE],
+                        ['label' => 'คำนำหน้า', 'url' => ['/prefix'], 'visible' => Yii::$app->user->can('managePrefix') ? TRUE : FALSE],
+                        ['label' => 'ครู', 'url' => ['/teachers'], 'visible' => Yii::$app->user->can('manageTeacher') ? TRUE : FALSE],
+                        ['label' => 'ประเภทพัสดุ', 'url' => ['/types'], 'visible' => Yii::$app->user->can('manageType') ? TRUE : FALSE],
+                        ['label' => 'หน่วย', 'url' => ['/units'], 'visible' => Yii::$app->user->can('manageUnit') ? TRUE : FALSE],
+                        ['label' => 'แบรนด์', 'url' => ['/brand'], 'visible' => Yii::$app->user->can('manageBrand') ? TRUE : FALSE],
+                        ['label' => 'พัสดุ', 'url' => ['/materials'], 'visible' => Yii::$app->user->can('manageMaterial') ? TRUE : FALSE],
+                        ['label' => 'ออเดอร์', 'url' => ['/orders'], 'visible' => !Yii::$app->user->isGuest ? TRUE : FALSE],
+                    /*                     * */
+                        [
+                        'label' => 'จัดการข้อมูล',
                         'items' => [
-                            ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
-                            '<div class="dropdown-divider"></div>',
-                            '<div class="dropdown-header">Dropdown Header</div>',
-                            ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+                                ['label' => 'ผู้ใช้', 'url' => ['/users'], 'visible' => Yii::$app->user->can('manageUser') ? TRUE : FALSE],
+                                ['label' => 'คำนำหน้า', 'url' => ['/prefix'], 'visible' => Yii::$app->user->can('managePrefix') ? TRUE : FALSE],
+                                ['label' => 'ครู', 'url' => ['/teachers'], 'visible' => Yii::$app->user->can('manageTeacher') ? TRUE : FALSE],
+                                ['label' => 'ประเภทพัสดุ', 'url' => ['/types'], 'visible' => Yii::$app->user->can('manageType') ? TRUE : FALSE],
+                                ['label' => 'หน่วย', 'url' => ['/units'], 'visible' => Yii::$app->user->can('manageUnit') ? TRUE : FALSE],
+                                ['label' => 'แบรนด์', 'url' => ['/brand'], 'visible' => Yii::$app->user->can('manageBrand') ? TRUE : FALSE],
+                                ['label' => 'พัสดุ', 'url' => ['/materials'], 'visible' => Yii::$app->user->can('manageMaterial') ? TRUE : FALSE],
+                                ['label' => 'การเบิก', 'url' => ['/orders'], 'visible' => !Yii::$app->user->isGuest ? TRUE : FALSE],
                         ],
                     ],
-                     /*****/
+                    /*                     * ** */
                     Yii::$app->user->isGuest ? (
-                        ['label' => 'Login', 'url' => ['/site/login']]
-                    ) : (
-                        '<li class="nav-item">'
-                        . Html::beginForm(['/site/logout'], 'post')
-                        . Html::submitButton(
-                            'Logout (' . Yii::$app->user->identity->username . ')',
-                            ['class' => 'btn btn-danger']
-                        )
-                        . Html::endForm()
-                        . '</li>'
-                    )
+                                ['label' => 'Login', 'url' => ['/site/login']]
+                            ) : (
+                            '<li class="nav-item">'
+                            . Html::beginForm(['/site/logout'], 'post')
+                            . Html::submitButton(
+                                    'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-danger']
+                            )
+                            . Html::endForm()
+                            . '</li>'
+                            )
                 ],
                 'options' => ['class' => 'navbar-nav nav-right'], // set this to nav-tab to get tab-styled navigation
             ]);
@@ -99,11 +101,11 @@ class MyDev extends Yii
             ?>
 
             <div class="container">
-                <?=
-                Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
-                ?>
+            <?=
+            Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ])
+            ?>
                 <?= Alert::widget() ?>
                 <?= $content ?>
             </div>
@@ -119,4 +121,4 @@ class MyDev extends Yii
 <?php $this->endBody() ?>
     </body>
 </html>
-<?php $this->endPage() ?>
+        <?php $this->endPage() ?>

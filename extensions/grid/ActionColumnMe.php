@@ -10,6 +10,7 @@ namespace app\extensions\grid;
 use Yii;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
+use rmrevin\yii\fontawesome\FAS;
 class ActionColumnMe extends ActionColumn
 {
     //public $template = '{view} {update} {delete} {download}';
@@ -24,7 +25,7 @@ class ActionColumnMe extends ActionColumn
     protected function initDefaultButtons()
     {
         $this->initDefaultButton('view', 'eye');
-        $this->initDefaultButton('update', 'pencil');
+        $this->initDefaultButton('update', 'edit');
         $this->initDefaultButton('download', 'download');
         $this->initDefaultButton('delete', 'trash', [
             'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
@@ -55,7 +56,7 @@ class ActionColumnMe extends ActionColumn
                     'data-pjax' => '0',
                     'class' => 'text-secondary'
                 ], $additionalOptions, $this->buttonOptions);
-                $icon = Html::tag('span', '', ['class' => "fa fa-$iconName"]);
+                $icon = FAS::icon($iconName);
                 return Html::a($icon, $url, $options);
             };
         }
