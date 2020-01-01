@@ -41,7 +41,7 @@ class OrdersSearch extends Orders
     public function search($params)
     {
           
-        $query = Orders::find();
+        $query = Orders::find()->where('created_by = '.\Yii::$app->user->id);
 
         // add conditions that should always apply here
 

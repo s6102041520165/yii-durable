@@ -14,10 +14,6 @@ $activeButton = ($model->totalCount>0)? TRUE: FALSE;
 
             [
                 'attribute' => 'material_id',
-                'label' => 'รหัสพัสดุ'
-            ],
-            [
-                'attribute' => 'material_id',
                 'value' => function($data){
                     return $data->materials['name'];
                 }
@@ -37,6 +33,7 @@ $activeButton = ($model->totalCount>0)? TRUE: FALSE;
                                     'required' => TRUE,
                                     'max' => $data->materials['stock']
                                 ]).
+                            Html::submitButton("อัพเดท",['class' => 'btn btn-primary btn-sm']).
                             Html::endForm();
                 }
             ],
