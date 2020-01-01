@@ -1,5 +1,7 @@
 <?php
 
+use phpDocumentor\Reflection\Types\Array_;
+use yii\bootstrap4\LinkPager;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -14,10 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Orders', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php Pjax::begin(); ?>
     <?php echo $this->render('_search', ['model' => $searchModel,]); ?>
 
@@ -27,11 +25,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             [
                 'attribute' => 'created_by',
                 'value' => function($data){
                     return $data->creator['username'];
+                }
+            ],
+            [
+                'attribute' => 'id',
+                'value' => function($data){
+                    $a = [];
+                    foreach ($data->ordersDetails as $key => $value) {
+                       array_push($a,$value);
+                    }
+                    return var_dump($a[0]);
                 }
             ],
             [
@@ -46,6 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'app\extensions\grid\ActionColumnMe'],
         ],
     ]); ?>
+
 
     <?php Pjax::end(); ?>
 
