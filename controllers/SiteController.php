@@ -12,6 +12,7 @@ use app\models\ContactForm;
 use app\models\Materials;
 use app\models\Withdraw;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 class SiteController extends Controller
 {

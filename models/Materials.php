@@ -40,6 +40,7 @@ class Materials extends \yii\db\ActiveRecord
             [['types_id', 'brand_id', 'units_id','stock'], 'integer','message'=>'ฟิลด์นี้ต้องเป็นตัวเลขจำนวนเต็ม'],
             [['price'], 'number','message'=>'กรุณาป้อนตัวเลขทศนิยม'],
             [['name', 'details'], 'string', 'max' => 255],
+            [['name'],'unique','message'=>'พบ {value} ในระบบ กรุณาลองชื่อพัสดุอื่น'],
             [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => Brand::className(), 'targetAttribute' => ['brand_id' => 'id']],
             [['types_id'], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => ['types_id' => 'id']],
             [['units_id'], 'exist', 'skipOnError' => true, 'targetClass' => Units::className(), 'targetAttribute' => ['units_id' => 'id']],
@@ -53,7 +54,7 @@ class Materials extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'รหัส',
-            'name' => 'ชื่อเรื่อง',
+            'name' => 'ชื่อพัสดุ',
             'types_id' => 'ประเภทพัสดุ',
             'brand_id' => 'ยี่ห้อ',
             'details' => 'รายละเอียด',

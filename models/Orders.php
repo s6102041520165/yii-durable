@@ -50,10 +50,10 @@ class Orders extends \yii\db\ActiveRecord {
             'id' => 'รหัส',
             'term' => 'เทอม',
             'year_of_study' => 'ปีการศึกษา',
-            'created_at' => 'เพิ่มเมื่อ',
-            'updated_at' => 'แก้ไขเมื่อ',
-            'created_by' => 'เพิ่มโดย',
-            'updated_by' => 'แก้ไขโดย',
+            'created_at' => 'เบิกเมื่อ',
+            'updated_at' => 'แก้ไขการเบิกเมื่อ',
+            'created_by' => 'เบิกโดย',
+            'updated_by' => 'แก้ไขการเบิกโดย',
         ];
     }
 

@@ -5,10 +5,14 @@ namespace app\controllers;
 use Yii;
 use app\models\Materials;
 use app\models\MaterialsSearch;
+use kartik\mpdf\Pdf;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
+
 /**
  * MaterialsController implements the CRUD actions for Materials model.
  */
@@ -45,6 +49,63 @@ class MaterialsController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Lists all Materials models.
+     * @return mixed
+     */
+    public function actionReport()
+    {
+        if (!Yii::$app->user->can('manageMaterial')) {
+            throw new ForbiddenHttpException('Permision access denined.');
+        }
+        $searchModel = new MaterialsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $this->renderPartial('report', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]),
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                'SetTitle' => 'Report',
+                'SetSubject' => 'Material Report',
+                'SetHeader' => ['Materials Report||Generated On: ' . date("r")],
+                'SetFooter' => ['|Page {PAGENO}|'],
+                'SetAuthor' => 'Weerachai Plodkaew',
+                'SetCreator' => 'Weerachai Plodkaew',
+                'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+            ],
+            'defaultFont' => 'kanit',
+        ]);
+        //Configure font
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $pdf->options['fontDir'] = array_merge($fontDirs, [
+            Yii::getAlias('@web') . '/fonts'
+        ]);
+
+        $pdf->options['fontdata'] = $fontData + [
+            'kanit' => [
+                'R' => 'Kanit-Regular.ttf',
+            ],
+            'angsana' => [
+                'R' => 'ANGSA.ttf',
+                
+            ],
+        ];
+        return $pdf->render();
     }
 
     /**

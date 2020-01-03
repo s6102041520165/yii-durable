@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Orders;
+use app\models\OrdersDetail;
+use app\models\OrdersDetailSearch;
 use app\models\OrdersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -49,7 +51,6 @@ class OrdersController extends Controller {
      */
     public function actionIndex() {
         
-        $teacherModel = Teachers::find()->all();
         $searchModel = new OrdersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -66,8 +67,11 @@ class OrdersController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id) {
-        return $this->render('view', [
+        $searchModel = new OrdersDetailSearch();
+        $detailModels = $searchModel->search($id);
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
+            'detailModels' => $detailModels,
         ]);
     }
 
@@ -97,7 +101,7 @@ class OrdersController extends Controller {
                 $orderDetail->save();
             }
             \app\models\Withdraw::deleteAll('created_by = '.Yii::$app->user->id);
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
               
         return $this->render('create', [

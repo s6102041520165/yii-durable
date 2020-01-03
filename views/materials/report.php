@@ -10,21 +10,10 @@ use yii\widgets\Pjax;
 $this->title = 'Materials';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="materials-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('<i class="fa fa-save"></i> เพิ่มพัสดุ', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('<i class="fa fa-print"></i> สรุปยอดคงเหลือ', ['report'], ['class' => 'btn btn-info']) ?>
-    </p>
-
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+<div class="materials-index" style="font-family: kanit">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -32,24 +21,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             [
                 'attribute' => 'types_id',
-                'value' => function($data){
+                'value' => function ($data) {
                     return $data->types['name'];
                 }
             ],
             [
                 'attribute' => 'brand_id',
-                'value' => function($data){
+                'value' => function ($data) {
                     return $data->brand['name'];
                 }
             ],
+            [
+                'attribute' => 'stock',
+                'value' => function ($data) {
+                    return $data->stock . " " . $data->units['name'];
+                }
+            ],
+            'price'
             //'details',
             //'units_id',
             //'price',
 
-            ['class' => 'app\extensions\grid\ActionColumnMe'],
+            //['class' => 'app\extensions\grid\ActionColumnMe'],
         ],
     ]); ?>
-
-    <?php Pjax::end(); ?>
-
 </div>

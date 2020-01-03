@@ -1,5 +1,7 @@
 <?php
 
+use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -13,41 +15,45 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?php //echo  Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php /*echo  Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])*/ ?>
     </p>
 
+    
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            [
-                'attribute' => 'created_by',
-                'value' => function($data){
-                    //print_r($data->creator);
-                    return $data->creator['username'];
-                }
-            ],
-            [
-                'attribute' => 'updated_by',
-                'value' => function($data){
-                    return $data->updator['username'];
-                }
-            ],
             'term',
             'year_of_study',
             'created_at:relativeTime',
             'updated_at:relativeTime',
         ],
     ]) ?>
+    <hr>
+    <h3>รายการที่เบิก</h3>
+    <?= GridView::widget([
+        'dataProvider' => $detailModels,
+        'columns' => [
+
+            'id',
+            [
+                'attribute' => 'material_id',
+                'value' => function($data){
+                    return $data->material['name'];
+                }
+            ],
+            'items'
+
+            //['class' => 'app\extensions\grid\ActionColumnMe'],
+        ],
+    ]); ?>
 
 </div>
