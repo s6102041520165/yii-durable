@@ -22,8 +22,7 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
 
     <?php $facultyList = ArrayHelper::map(app\models\Faculty::find()->all(), 'id', 'name') ?>
-            <?= $form->field($model, 'faculty_id')
-                    ->dropDownList($facultyList, ['prompt' => '--select--'])?>
+    <?= $form->field($model, 'faculty_id')->dropDownList($facultyList,  ['prompt' => '--select--']) ?>
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 

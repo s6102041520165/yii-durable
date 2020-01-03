@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->creator['username'];
                 }
             ],
+            /*
             [
                 'attribute' => 'id',
                 'value' => function($data){
@@ -40,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return var_dump($a[0]);
                 }
-            ],
+            ],*/
             [
                 'attribute' => 'term',
                 'label' => 'เทอม / ปีการศึกษา',
